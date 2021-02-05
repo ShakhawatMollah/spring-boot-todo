@@ -1,4 +1,4 @@
-# ToDo App
+# Spring-Boot Thymeleaf ToDo
 
 ## Technical requirements (applied)
 * Thymeleaf as frontend framework
@@ -52,6 +52,6 @@ mvn clean spring-boot:run
 - https://i.ibb.co/R46rpZ6/Page-for-listing-all-the-todo-items.png
 - https://i.ibb.co/JC2mKTh/Todo-item-add-form.png
 - https://i.ibb.co/Z8C7jWY/Todo-item-edit-form.png
-- https://i.ibb.co/Th8M15W/Back-end-Form-Validation.png
-- https://i.ibb.co/KWyhzKy/Back-end-Maximum-Length-Form-Validation.png
+- https://i.ibb.co/MhngJMW/Back-end-Form-Validation.png
+- https://i.ibb.co/mDDzFfb/Back-end-Maximum-Length-Form-Validation.png
 - https://i.ibb.co/nPtSm3Y/Data-updated-with-successful-message.png 
