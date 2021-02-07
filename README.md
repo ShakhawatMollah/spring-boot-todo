@@ -32,7 +32,7 @@ cd spring-boot-todo
 You have to update the following settings:
 ```
 #PostgreSQL Database Configuration
-spring.datasource.url=jdbc:postgresql://localhost:5432/<database_name>?currentSchema=<schema_name>
+spring.datasource.url=jdbc:postgresql://localhost:5432/<DATABASE_NAME>?currentSchema=<SCHEMA_NAME>
 spring.datasource.username=<DB_USERNAME>
 spring.datasource.password=<DB_PASSWORD>
 ```
@@ -45,7 +45,7 @@ You can run the maven application from the command line using:
 mvn clean spring-boot:run
 ```
 
-### Test Status-Posting Web Application
+### Browse Web Application
 1. Browse the following path `http://localhost:8080`
 
 ### Snapshot of output
