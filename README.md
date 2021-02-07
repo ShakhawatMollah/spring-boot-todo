@@ -11,7 +11,7 @@
 - User can entry task item(s)
 - User can update task item(s)
 - User can track his/her task list
-- Task item(s) pagination
+- Task item(s) custom pagination
 - Pages interact between each other logically
 
 ## Getting Started
@@ -19,7 +19,7 @@
 * Git
 * JDK 8 or later
 * Maven 3.0 or later
-* PostgreSQL
+* PostgreSQL Database
 
 ### Clone
 To get started you can simply clone this repository using git:
