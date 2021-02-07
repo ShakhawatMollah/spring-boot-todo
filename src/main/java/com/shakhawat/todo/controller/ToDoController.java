@@ -40,19 +40,18 @@ public class ToDoController {
 		
 		ModelAndView mav = new ModelAndView();
 		int currentPage = page.orElse(1);
-        int pageSize = size.orElse(10);
+        int pageSize = size.orElse(5);
 
         Page<ToDo> allToDos = toDoService.findPaginated(PageRequest.of(currentPage - 1, pageSize));
-        
-        mav.addObject("toDoList", allToDos);
 
-        int totalPages = allToDos.getTotalPages();
-        if (totalPages > 0) {
+        if (!allToDos.isEmpty()) {
+        	int totalPages = allToDos.getTotalPages();
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                 .boxed()
                 .collect(Collectors.toList());
             mav.addObject("pageNumbers", pageNumbers);
         }
+        mav.addObject("toDoList", allToDos);
         mav.setViewName("todo/todo_list");
         
 		return mav;
@@ -61,9 +60,11 @@ public class ToDoController {
 	// Create ToDo
 	@GetMapping("/createToDo")
 	public ModelAndView createToDoForm() {
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("todo", new ToDo());
 		mav.setViewName("todo/todo_add");
+		
 		return mav;
 	}
 	
@@ -81,14 +82,15 @@ public class ToDoController {
 		
 		toDoService.saveToDo(todo);
 		sessionStatus.setComplete();
-		redirectAttributes.addFlashAttribute("message", "Data saved successfully!");
 		
+		redirectAttributes.addFlashAttribute("message", "Data saved successfully!");
 		return "redirect:/";
 	}
 	
 	// Edit ToDo
 	@GetMapping("/editToDo")
 	public ModelAndView editToDo(@ModelAttribute("id") String id, BindingResult bindingResult) {
+		
 		ModelAndView mav = new ModelAndView();
 		
 		ToDo todo = new ToDo();
@@ -103,6 +105,7 @@ public class ToDoController {
 		}		
 		mav.addObject("todo", todo);
 		mav.setViewName("todo/todo_edit");
+		
 		return mav;
 	}
 	
