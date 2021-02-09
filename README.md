@@ -1,6 +1,6 @@
 # Spring-Boot Thymeleaf ToDo
 
-## Technical requirements (applied)
+## Applied Technology
 * Thymeleaf as frontend framework
 * For backend used Java EE (Spring boot)
 * Used PostgreSQL 12.5 database
