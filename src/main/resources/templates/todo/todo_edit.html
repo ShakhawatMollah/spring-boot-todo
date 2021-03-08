@@ -12,7 +12,9 @@
 		  </div>
 		  <div class="card-body">
 		  	<div th:if="${message != null}" class="alert alert-dismissable alert-styled-left" th:classappend="${error} ? 'alert-danger' : 'alert-success'" id="idMessagePanel">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 				<div th:text="${message}"></div>
 			</div>
 			<form th:action="@{/updateToDo}" method="POST" th:object="${todo}">

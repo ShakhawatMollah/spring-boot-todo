@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +20,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.shakhawat.todo.validator.ToDoValidator;
 import com.shakhawat.todo.model.ToDo;
 import com.shakhawat.todo.service.ToDoService;
+import com.shakhawat.todo.validator.ToDoValidator;
 
 @Controller
 public class ToDoController {
@@ -71,20 +70,35 @@ public class ToDoController {
 	// Save ToDo
 	@Transactional
 	@PostMapping("/saveToDo")
-	public String saveToDo(@ModelAttribute("todo") @Validated ToDo todo, BindingResult bindingResult, SessionStatus sessionStatus, RedirectAttributes redirectAttributes, Model model) {
+	public ModelAndView saveToDo(@ModelAttribute("todo") @Validated ToDo todo, BindingResult bindingResult, SessionStatus sessionStatus, RedirectAttributes redirectAttributes) {
+		
+		ModelAndView mav = new ModelAndView();
 		
 		toDoValidator.validate(todo, bindingResult);
 		
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("todo", todo);
-			return "todo/todo_add";
+			mav.addObject("todo", todo);
+			mav.addObject("error", true);
+			mav.setViewName("todo/todo_add");
+			return mav;
 		}
 		
-		toDoService.saveToDo(todo);
+		try {
+			toDoService.saveToDo(todo);
+		} catch (Exception e) {
+			mav.addObject("error", true);
+			mav.addObject("message", e.getMessage());
+			mav.addObject("todo", todo);
+			mav.setViewName("todo/todo_add");
+			return mav;
+		}
+		
 		sessionStatus.setComplete();
 		
 		redirectAttributes.addFlashAttribute("message", "Data saved successfully!");
-		return "redirect:/";
+		mav.setViewName("redirect:/");
+		
+		return mav;
 	}
 	
 	// Edit ToDo
@@ -112,29 +126,35 @@ public class ToDoController {
 	// Update ToDo
 	@Transactional
 	@PostMapping("/updateToDo")
-	public String updateToDo(@ModelAttribute("todo") @Validated ToDo todo, BindingResult bindingResult, SessionStatus sessionStatus, RedirectAttributes redirectAttributes, Model model) {
+	public ModelAndView updateToDo(@ModelAttribute("todo") @Validated ToDo todo, BindingResult bindingResult, SessionStatus sessionStatus, RedirectAttributes redirectAttributes) {
+		
+		ModelAndView mav = new ModelAndView();
 		
 		toDoValidator.validate(todo, bindingResult);
 		
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("todo", todo);
-			return "todo/todo_edit";
+			mav.addObject("todo", todo);
+			mav.addObject("error", true);
+			mav.setViewName("todo/todo_edit");
+			return mav;
 		}
 		
 		try {
 			toDoService.updateToDo(todo);
 		} catch (Exception e) {
-			model.addAttribute("error", true);
-			model.addAttribute("message", e.getMessage());
-			model.addAttribute("todo", todo);
-			return "todo/todo_edit";
+			mav.addObject("error", true);
+			mav.addObject("message", e.getMessage());
+			mav.addObject("todo", todo);
+			mav.setViewName("todo/todo_edit");
+			return mav;
 		}
 		
-		toDoService.updateToDo(todo);
 		sessionStatus.setComplete();
 		
 		redirectAttributes.addFlashAttribute("message", "Data updated successfully!");
-		return "redirect:/";
+		mav.setViewName("redirect:/");
+		
+		return mav;
 	}
 
 }
